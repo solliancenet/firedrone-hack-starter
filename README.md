@@ -1,3 +1,6 @@
+# Hackathon Overview
+The overview of the hackathon is available on DevPost at: [https://firedrone.devpost.com/](https://firedrone.devpost.com/)
+
 # Getting started with the FireDrone.AI Open Hack
 Get started with the hackathon in a few simple steps.
 
