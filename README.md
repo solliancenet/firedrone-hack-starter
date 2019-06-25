@@ -1,16 +1,74 @@
 # Hackathon Overview
-The overview of the hackathon is available on DevPost at: [https://firedrone.devpost.com/](https://firedrone.devpost.com/)
+The overview of the hackathon is available on DevPost at: [https://firedrone.devpost.com](https://firedrone.devpost.com)
 
 # Getting started with the FireDrone.AI Open Hack
 Get started with the hackathon in a few simple steps.
 
-1. Access the Azure Notebook starter project:
+1. Navigate to https://notebooks.azure.com and sign-in with a personal or organizational account.
 
-  https://notebooks.azure.com/Solliance/projects/firedrone-ai
+2. Once you are signed in, go to the **My Projects** section and click on **Upload GitHub Repo**.
 
-2. Clone the Project into your own account.
+3. In the GitHub repository field enter `solliancenet/firedrone-hack-starter`. Choose a name for your project and click on **Import**. The import process will finish in a couple of minutes.
 
-3. Open the `Starter.ipynb` notebook and step thru it, following the instructions.
+4. Start the `Registration.ipynb` notebook. This notebook contains step by step instructions on how to get access to the FireDrone.ai testing environment.
 
-If you prefer an offline, python focused version of the starter instructions, feel free to view the [PDF version](./starter.pdf). You can also download a copy of the Jupyter Notebook without going thru the Azure Notebooks project [from here](./Starter.ipynb) though you will need to clone this repository to get to it.
+    You will need to provide the name of your Devpost account (the one you used to register for the contest at [https://firedrone.devpost.com](https://firedrone.devpost.com)).
 
+    Once you submit your registration request, we will check if your Devpost account is indeed registered for the contest and then will activate your FireDrone.ai user. This will enable you to make calls to the FireDrone.ai API through which you get access to the contest testing environment.
+
+
+
+# Understanding the FireDrone.AI Virtual Environment
+
+To understand the FireDrone.AI virtual environment you need to get familiar with the following concepts:
+
+- Virtual scene (or simply scene)
+- Direct run
+- Reverse run
+
+## FireDrone Scenes
+
+Our environment contains several scenes which provide the basic context for your main mission: detecting potentially dangerous fire situations.
+
+To start with, we have added two simple scenes that will enable you to fire up your engines and put your awesome Machine Learning models to work. Through the entire period of the contest we will add new scenes to help you test and improve your models. 
+
+**Note**: None of the scenes that are made available during the development stage will be used for judging. Your models will have to deal with a scene they never saw before as part of the judging stage of the contest. Make sure your're not climbing too much of the overfitting hill :)
+
+As you already experienced while running the `Registration.ipynb` notebook, the FireDrone.ai API (through the FireDrone API Client SDK for Python) provides a simple way to enumerate all scenes that are available in the virtual environment at any given point in time.
+
+## FireDrone Runs
+
+In the context of any given scene, the fire drone can be controlled using one of two approaches:
+
+- **Direct Run**: This is basically manual mode. You control the drone's movement, when to request frames and when to score a frame as containing fire or not (or indicate the pixels within the frame that are indicative of fire).
+- **Reverse Run**: This is auto-pilot mode. You will supply the logic to automatically decide what do, but the simulation environment will call you to ask for actions.
+
+A run is always executed in the context of a scene. In order to start a run you will need to specify the numeric identifier of the scene in which your run will execute. When you start a run, you get a unique identifier for that run which you will need to provide as a parameter for all actions you execute on that particular run.
+
+When it comes to movement, the firedrone has two degrees of freedom which enable it to move in a plane that is parallel to the plane of the scene. When a run is started, the drone will be positioned at elevation zero (along the Y or up<->down axis), right in the middle of the scene (along the X or left<->right axis). Once the drone reaches any of the limits of the scene, movement will not be possible anymore in the direction of that particular limit.
+
+At any given position of the drone, you will be able to perform the following actions:
+
+- Move left, right, up, or down (provided that you are not reaching one of the limits of the scene)
+- Get the drone's field of view image - you are will get a snapshot of the drone's camera
+- Score the field of view image - either perform a simple scoring (fire/no fire) or a complex one (indicate which pixels of the image are part of a fire)
+
+Once you are done with the run, you will need to end the run. The virtual environment does not allow you to have more than one active run at any given point in time. 
+
+## FireDrone Runs History
+
+At any given point in time you will be able to get the history of all your runs. For each run, we record detail telemetry (including all movements of the drone and all scoring attempts). The FireDrone API enables you to retrieve this telemetry in case you need to analyze the historical data generated by your previous attempts.
+
+## FireDrone Direct Runs
+
+This is basically manual mode. You control the drone's movement, when to request frames and when to score a frame as containing fire or not (or indicate the pixels within the frame that are indicative of fire).
+
+Take a look at the `DirectRuns.ipynb` notebook for an end to end example of executing a direct run with the FireDrone.
+
+## FireDrone Reverse Runs 
+
+This is auto-pilot mode. You will supply the logic to automatically decide what do, but the simulation environment will call you to ask for actions.
+
+Once you have demonstrated you are ready to go with the Direct Run method, we'll provide you instructions on how to integrate your logic with a reverse run. We look forward to seeing how your drone does on autopilot!
+
+More information about reverse runs comming soon...
