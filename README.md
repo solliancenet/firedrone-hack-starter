@@ -65,6 +65,8 @@ This is basically manual mode. You control the drone's movement, when to request
 
 Take a look at the `DirectRuns.ipynb` notebook for an end to end example of executing a direct run with the FireDrone.
 
+For more details about scoring, read the [Scoring in Direct Runs](./direct-runs.md).
+
 ## FireDrone Reverse Runs 
 
 This is auto-pilot mode. You will supply the logic to automatically decide what do, but the simulation environment will call you to ask for actions.
